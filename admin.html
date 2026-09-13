@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login | Scientific Hospital</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Scientific Hospital</div>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#doctor">Doctor</a>
+            <a href="index.html#specialized">Services</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+    </nav>
+
+
+    <section class="admin-login-section">
+
+        <div class="admin-login-card">
+
+            <div class="admin-icon">
+                🔐
+            </div>
+
+            <h1>Admin Login</h1>
+
+            <p>Scientific Hospital</p>
+
+            <form>
+
+                <label>Username</label>
+
+                <input
+                    type="text"
+                    placeholder="Admin Username"
+                    required
+                >
+
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    placeholder="Admin Password"
+                    required
+                >
+
+
+                <button type="submit">
+                    🔐 Login
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <footer class="site-footer">
+
+        <h3>Scientific Hospital</h3>
+
+        <p>Dr. Mahesh Sah</p>
+
+        <p>📞 947 189 2335 | 📱 919 989 3278</p>
+
+        <p>📍 Vijay Vihar Colony, Danapur, Patna</p>
+
+        <p class="copyright">
+            © 2026 Scientific Hospital. All Rights Reserved.
+        </p>
+
+    </footer>
+<script>
+const form = document.querySelector(".admin-login-card form");
+
+form.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const username = form.querySelector('input[type="text"]').value;
+    const password = form.querySelector('input[type="password"]').value;
+
+    const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username: username,
+            password: password
+        })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+        window.location.href = "admin-dashboard.html";
+    } else {
+        alert(result.message);
+    }
+});
+</script>
+</body>
+
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>OPD Appointment | Scientific Hospital</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Scientific Hospital</div>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#doctor">Doctor</a>
+            <a href="index.html#specialized">Services</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+    </nav>
+
+
+    <section class="opd-section">
+
+        <div class="opd-card">
+            <div class="hospital-info">
+    <h2>Scientific Hospital</h2>
+    <h3>Dr. Mahesh Sah</h3>
+    <p>📍 Vijay Vihar Colony, Near St. Karen's Secondary School, Khagaul Road, Danapur, Patna</p>
+    <p>📞 947 189 2335 | 📱 919 989 3278</p>
+</div>
+
+            <h1>🩺 OPD Appointment</h1>
+
+            <p class="opd-subtitle">
+                Scientific Hospital में OPD Appointment Book करें
+            </p>
+            <div class="opd-info-box">
+    <h2>🏥 SCIENTIFIC HOSPITAL</h2>
+
+    <p>📍 Vijay Vihar Colony, Near St. Karen's Secondary School, Khagaul Road, Danapur, Patna</p>
+
+    <h3>🕐 OPD Timing</h3>
+
+    <p><strong>Morning:</strong> 08:00 AM to 09:45 AM</p>
+    <p><strong>Evening:</strong> 04:00 PM to 05:45 PM</p>
+</div>
+<div class="opd-info-box">
+
+    <h2>🏥 SCIENTIFIC POLY CLINIC</h2>
+
+    <p>
+        📍 Infront of Gaurav ITI College, Hinduni Alampur,
+        Gonpura, Phulwari Sharif, Patna-801503
+    </p>
+
+    <h3>🕐 OPD Timing</h3>
+
+    <p><strong>Morning:</strong> 08:00 AM to 09:45 AM</p>
+    <p><strong>Evening:</strong> 04:00 PM to 05:45 PM</p>
+
+    <h3>🩺 Polypathic Cancer Nidan</h3>
+    <p><strong>Mahua Vaishali</strong></p>
+
+    <h3>📅 Weekly OPD — Every Sunday</h3>
+
+    <p><strong>Morning:</strong> 11:00 AM to 02:00 PM</p>
+    <p><strong>Evening:</strong> 05:00 PM to 08:30 PM</p>
+
+</div>
+
+            <form id="opdForm">
+
+                <label>Patient Name</label>
+                <input type="text" name="patientName"
+                       placeholder="मरीज का नाम" required>
+
+
+                <label>Mobile Number</label>
+                <input type="tel" name="mobile"
+                       placeholder="10 अंकों का मोबाइल नंबर"
+                       maxlength="10"
+                       required>
+
+
+                <label>Age</label>
+                <input type="number" name="age"
+                       placeholder="उम्र"
+                       min="1" max="120"
+                       required>
+
+
+                <label>Gender</label>
+
+                <select name="gender" required>
+                    <option value="">-- Gender चुनें --</option>
+                    <option value="Male">पुरुष</option>
+                    <option value="Female">महिला</option>
+                    <option value="Other">अन्य</option>
+                </select>
+
+
+                <label>Problem / बीमारी</label>
+
+                <textarea name="problem"
+                          placeholder="अपनी समस्या लिखें"
+                          rows="4"
+                          required></textarea>
+
+
+                <label>OPD Date</label>
+
+                <input type="date"
+                       name="opdDate"
+                       required>
+<p id="selectedDay" style="font-weight:bold; color:#1976d2;"></p>
+
+                <label>OPD Time</label>
+
+                <select name="opdTime" required>
+                <option value="Scientific Hospital - 10:00 AM - 01:00 PM">
+    🏥 Scientific Hospital - 10:00 AM - 01:00 PM
+</option>
+
+<option value="Scientific Hospital - 06:00 PM - 09:00 PM">
+    🏥 Scientific Hospital - 06:00 PM - 09:00 PM
+</option>
+
+<option value="Scientific Poly Clinic - 08:00 AM - 09:45 AM">
+    🏥 Scientific Poly Clinic - 08:00 AM - 09:45 AM
+</option>
+
+<option value="Scientific Poly Clinic - 04:00 PM - 05:45 PM">
+    🏥 Scientific Poly Clinic - 04:00 PM - 05:45 PM
+</option>
+
+<option value="Polypathic Cancer Nidan - Mahua Vaishali - Sunday 11:00 AM - 02:00 PM">
+    🩺 Polypathic Cancer Nidan - Mahua Vaishali - Sunday 11:00 AM - 02:00 PM
+</option>
+                </select>
+
+
+                <button type="submit" class="opd-submit-btn">
+                    📅 Book OPD Appointment
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <footer class="site-footer">
+
+        <h3>Scientific Hospital</h3>
+
+        <p>Dr. Mahesh Sah</p>
+
+        <p>📞 947 189 2335 | 📱 919 989 3278</p>
+
+        <p>📍 Vijay Vihar Colony, Danapur, Patna</p>
+
+        <p class="copyright">
+            © 2026 Scientific Hospital. All Rights Reserved.
+        </p>
+
+    </footer>
+<script>
+    const opdDate = document.querySelector('input[name="opdDate"]');
+const opdTime = document.querySelector('select[name="opdTime"]');
+
+opdDate.addEventListener("change", function () {
+    const date = new Date(this.value);
+    document.getElementById("selectedDay").textContent =
+    "📅 Day: " + date.toLocaleDateString("en-US", { weekday: "long" });
+    const day = date.getDay();
+
+    Array.from(opdTime.options).forEach(function (option) {
+
+    if (option.value.includes("Scientific Hospital")) {
+        option.disabled = false;
+
+    } else if (option.value.includes("Sunday")) {
+        option.disabled = day !== 0;
+
+    } else if (option.value.includes("Scientific Poly Clinic")) {
+        option.disabled = day === 0;
+    }
+
+});
+
+    opdTime.value = "";
+});
+const form = document.getElementById("opdForm");
+
+form.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+
+    const appointment = {
+        patientName: formData.get("patientName"),
+        mobile: formData.get("mobile"),
+        age: formData.get("age"),
+        gender: formData.get("gender"),
+        problem: formData.get("problem"),
+        opdDate: formData.get("opdDate"),
+        opdTime: formData.get("opdTime")
+    };
+
+    const response = await fetch("/api/appointments", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(appointment)
+    });
+
+    const result = await response.json();
+
+    alert(result.message);
+
+    if (result.success) {
+        form.reset();
+    }
+});
+</script>
+</body>
+</html>

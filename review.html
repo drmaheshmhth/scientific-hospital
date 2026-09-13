@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Review | Dr. Mahesh Sah</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        🏥 Scientific Hospital
+        <small>For Better Healthcare</small>
+    </div>
+
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#doctor">Doctor</a>
+        <a href="index.html#specialized">Services</a>
+        <a href="index.html#contact">Contact</a>
+    </div>
+</nav>
+
+<section class="review-page">
+    <form class="review-form-card" id="reviewForm">
+
+        <h1>⭐ Patient Review</h1>
+
+        <h2>Dr. Mahesh Sah</h2>
+
+        <p>
+            Share your experience with Dr. Mahesh Sah
+            and Scientific Hospital.
+        </p>
+        <label for="patientName">Patient Name</label>
+<input
+
+    type="text"
+    id="patientName"
+    name="patientName"
+    placeholder="Enter your name"
+    required
+>
+<label for="rating">Rating</label>
+<select id="rating" name="rating" required>
+    <option value="">Select Rating</option>
+    <option value="5">★★★★★ — Excellent</option>
+    <option value="4">★★★★ — Very Good</option>
+    <option value="3">★★★ — Good</option>
+    <option value="2">★★ — Average</option>
+    <option value="1">★ — Poor</option>
+</select>
+<label for="review">Your Review</label>
+<textarea
+    id="review"
+    name="review"
+    rows="5"
+    placeholder="Write your experience..."
+    required
+></textarea>
+<button type="submit" class="review-submit-btn">
+    ⭐ Submit Review
+</button>
+</form>
+</section>
+<script>
+const reviewForm = document.getElementById("reviewForm");
+
+reviewForm.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(reviewForm);
+
+    const reviewData = {
+        patientName: formData.get("patientName"),
+        rating: formData.get("rating"),
+        review: formData.get("review")
+    };
+
+    const response = await fetch("/api/reviews", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reviewData)
+    });
+
+    const result = await response.json();
+
+    alert(result.message);
+
+    if (result.success) {
+        reviewForm.reset();
+    }
+});
+</script>
+</body>
+</html>

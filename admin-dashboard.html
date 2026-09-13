@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | Scientific Hospital</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Scientific Hospital
+        </div>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#doctor">Doctor</a>
+            <a href="index.html#specialized">Services</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+
+    </nav>
+
+
+    <section class="admin-dashboard">
+
+        <div class="dashboard-header">
+
+            <div>
+                <h1>🩺 OPD Dashboard</h1>
+
+                <p>
+                    Scientific Hospital - Appointment Management
+                </p>
+            </div>
+
+            <a href="/api/logout" class="admin-logout">
+                🔐 Logout
+            </a>
+
+        </div>
+
+
+        <div class="dashboard-cards">
+
+            <div class="dashboard-card">
+                <h3>📋 Total Appointments</h3>
+                <strong>1</strong>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>🆕 New Appointments</h3>
+                <strong>1</strong>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>✅ Confirmed</h3>
+                <strong>0</strong>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>❌ Cancelled</h3>
+                <strong>0</strong>
+            </div>
+
+        </div>
+
+
+        <div class="appointment-section">
+
+            <h2>📅 OPD Appointments</h2>
+<input
+    type="text"
+    id="searchPatient"
+    placeholder="🔎 Patient name या mobile search करें"
+    class="patient-search"
+>
+<div class="appointment-filters">
+    <button onclick="filterAppointments('All')">All</button>
+    <button onclick="filterAppointments('New')">🆕 New</button>
+    <button onclick="filterAppointments('Confirmed')">✅ Confirmed</button>
+    <button onclick="filterAppointments('Cancelled')">❌ Cancelled</button>
+</div>
+
+            <div class="appointment-table-container">
+
+                <table class="appointment-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Patient</th>
+                            <th>Mobile</th>
+                            <th>Age</th>
+                            <th>Problem</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                       <tbody id="appointmentList">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer class="site-footer">
+
+        <h3>Scientific Hospital</h3>
+
+        <p>Dr. Mahesh Sah</p>
+
+        <p>📞 947 189 2335 | 📱 919 989 3278</p>
+
+        <p>📍 Vijay Vihar Colony, Danapur, Patna</p>
+
+        <p class="copyright">
+            © 2026 Scientific Hospital. All Rights Reserved.
+        </p>
+
+    </footer>
+<script>
+async function loadAppointments() {
+    const response = await fetch("/api/appointments");
+    const appointments = await response.json();
+
+    const appointmentList = document.getElementById("appointmentList");
+    document.querySelector(".dashboard-card:nth-child(1) strong").textContent = appointments.length;
+document.querySelector(".dashboard-card:nth-child(2) strong").textContent = appointments.filter(a => a.status === "New").length;
+document.querySelector(".dashboard-card:nth-child(3) strong").textContent = appointments.filter(a => a.status === "Confirmed").length;
+document.querySelector(".dashboard-card:nth-child(4) strong").textContent = appointments.filter(a => a.status === "Cancelled").length;
+
+    appointmentList.innerHTML = "";
+
+    appointments.forEach(function(appointment) {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${appointment.patientName}</td>
+            <td>${appointment.mobile}</td>
+            <td>${appointment.age}</td>
+            <td>${appointment.problem}</td>
+            <td>${appointment.opdDate}</td>
+            <td>${appointment.opdTime}</td>
+            <td>
+                <span class="status-new">${appointment.status}</span>
+            </td>
+            <td>
+               <button class="confirm-btn" onclick="updateStatus(${appointment.id}, 'Confirmed')">✅ Confirm</button>
+    <button class="cancel-btn" onclick="updateStatus(${appointment.id}, 'Cancelled')">❌ Cancel</button>
+    <button class="delete-btn" onclick="deleteAppointment(${appointment.id})">🗑️ Delete</button>
+            </td>
+        `;
+
+        appointmentList.appendChild(row);
+    });
+}
+
+loadAppointments();
+function filterAppointments(status) {
+    document.querySelectorAll("#appointmentList tr").forEach(function(row) {
+        const appointmentStatus = row.cells[6].textContent.trim();
+
+        if (status === "All" || appointmentStatus === status) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
+
+document.getElementById("searchPatient").addEventListener("input", function () {
+    const searchText = this.value.toLowerCase();
+
+    document.querySelectorAll("#appointmentList tr").forEach(function (row) {
+        const patientName = row.cells[0].textContent.toLowerCase();
+        const mobile = row.cells[1].textContent.toLowerCase();
+
+        if (patientName.includes(searchText) || mobile.includes(searchText)) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+});
+
+async function updateStatus(id, status) {
+    const response = await fetch(`/api/appointments/${id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            status: status
+        })
+    });
+
+    const result = await response.json();
+
+    alert(result.message);
+
+    if (result.success) {
+        loadAppointments();
+    }
+}
+async function deleteAppointment(id) {
+    const confirmDelete = confirm("क्या आप इस appointment को delete करना चाहते हैं?");
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    const response = await fetch(`/api/appointments/${id}`, {
+        method: "DELETE"
+    });
+
+    const result = await response.json();
+
+    alert(result.message);
+
+    if (result.success) {
+        loadAppointments();
+    }
+}
+</script>
+</body>
+
+</html>
