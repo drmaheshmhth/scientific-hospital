@@ -3,98 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Review | Dr. Mahesh Sah</title>
+
+    <title>Patient Reviews | Dr. Mahesh Sah | Scientific Hospital</title>
+
+    <meta name="description"
+        content="Share your experience and feedback about Dr. Mahesh Sah and Scientific Hospital.">
+
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        .review-page {
+            min-height: 80vh;
+            padding: 60px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f4f8fb;
+        }
+
+        .review-form-card {
+            width: 100%;
+            max-width: 650px;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.10);
+        }
+
+        .review-form-card h1 {
+            text-align: center;
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .review-form-card h2 {
+            text-align: center;
+            color: #222;
+            margin-bottom: 10px;
+        }
+
+        .review-intro {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .review-form-card label {
+            display: block;
+            font-weight: 600;
+            margin: 18px 0 8px;
+            color: #333;
+        }
+
+        .review-form-card input,
+        .review-form-card select,
+        .review-form-card textarea {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #d5dce3;
+            border-radius: 10px;
+            font-size: 15px;
+            box-sizing: border-box;
+            outline: none;
+            background: #fff;
+        }
+
+        .review-form-card input:focus,
+        .review-form-card select:focus,
+        .review-form-card textarea:focus {
+            border-color: #1976d2;
+        }
+
+        .review-form-card textarea {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        .review-submit-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #1976d2;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .review-submit-btn:hover {
+            background: #125ea8;
+        }
+
+        .review-note {
+            text-align: center;
+            font-size: 13px;
+            color: #777;
+            margin-top: 18px;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-home a {
+            color: #1976d2;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            .review-page {
+                padding: 35px 15px;
+            }
+
+            .review-form-card {
+                padding: 25px 20px;
+            }
+
+            .review-form-card h1 {
+                font-size: 27px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<nav class="navbar">
-    <div class="logo">
-        🏥 Scientific Hospital
-        <small>For Better Healthcare</small>
-    </div>
+    <!-- ================= NAVBAR ================= -->
 
-    <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="index.html#doctor">Doctor</a>
-        <a href="index.html#specialized">Services</a>
-        <a href="index.html#contact">Contact</a>
-    </div>
-</nav>
+    <nav class="navbar">
 
-<section class="review-page">
-    <form class="review-form-card" id="reviewForm">
+        <div class="logo">
+            🏥 Scientific Hospital
+            <small>For Better Healthcare</small>
+        </div>
 
-        <h1>⭐ Patient Review</h1>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#doctor">Doctor</a>
+            <a href="index.html#specialized">Services</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
 
-        <h2>Dr. Mahesh Sah</h2>
+    </nav>
+
+
+    <!-- ================= REVIEW SECTION ================= -->
+
+    <section class="review-page">
+
+        <form
+            class="review-form-card"
+            id="reviewForm"
+            action="https://formspree.io/f/mwlppejk"
+            method="POST"
+        >
+
+            <h1>⭐ Patient Review</h1>
+
+            <h2>Dr. Mahesh Sah</h2>
+
+            <p class="review-intro">
+                We value your feedback.
+                Share your experience with
+                <strong>Dr. Mahesh Sah</strong> and
+                <strong>Scientific Hospital</strong>.
+            </p>
+
+
+            <!-- PATIENT NAME -->
+
+            <label for="patientName">
+                Patient Name
+            </label>
+
+            <input
+                type="text"
+                id="patientName"
+                name="patientName"
+                placeholder="Enter your name"
+                required
+            >
+
+
+            <!-- RATING -->
+
+            <label for="rating">
+                Your Rating
+            </label>
+
+            <select
+                id="rating"
+                name="rating"
+                required
+            >
+
+                <option value="">
+                    Select Rating
+                </option>
+
+                <option value="5 Stars">
+                    ★★★★★ — Excellent
+                </option>
+
+                <option value="4 Stars">
+                    ★★★★ — Very Good
+                </option>
+
+                <option value="3 Stars">
+                    ★★★ — Good
+                </option>
+
+                <option value="2 Stars">
+                    ★★ — Average
+                </option>
+
+                <option value="1 Star">
+                    ★ — Poor
+                </option>
+
+            </select>
+
+
+            <!-- REVIEW -->
+
+            <label for="review">
+                Your Review
+            </label>
+
+            <textarea
+                id="review"
+                name="review"
+                rows="5"
+                placeholder="Write your experience with Dr. Mahesh Sah..."
+                required
+            ></textarea>
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                class="review-submit-btn"
+            >
+                ⭐ Submit Review
+            </button>
+
+
+            <p class="review-note">
+                Thank you for taking the time to share your feedback.
+            </p>
+
+            <div class="back-home">
+                <a href="index.html">
+                    ← Back to Scientific Hospital
+                </a>
+            </div>
+
+        </form>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="site-footer">
+
+        <h3>Scientific Hospital</h3>
 
         <p>
-            Share your experience with Dr. Mahesh Sah
-            and Scientific Hospital.
+            Dr. Mahesh Sah
         </p>
-        <label for="patientName">Patient Name</label>
-<input
 
-    type="text"
-    id="patientName"
-    name="patientName"
-    placeholder="Enter your name"
-    required
->
-<label for="rating">Rating</label>
-<select id="rating" name="rating" required>
-    <option value="">Select Rating</option>
-    <option value="5">★★★★★ — Excellent</option>
-    <option value="4">★★★★ — Very Good</option>
-    <option value="3">★★★ — Good</option>
-    <option value="2">★★ — Average</option>
-    <option value="1">★ — Poor</option>
-</select>
-<label for="review">Your Review</label>
-<textarea
-    id="review"
-    name="review"
-    rows="5"
-    placeholder="Write your experience..."
-    required
-></textarea>
-<button type="submit" class="review-submit-btn">
-    ⭐ Submit Review
-</button>
-</form>
-</section>
-<script>
-const reviewForm = document.getElementById("reviewForm");
+        <p>
+            Quality Healthcare & Patient Care
+        </p>
 
-reviewForm.addEventListener("submit", async function(event) {
-    event.preventDefault();
+        <p>
+            © 2026 Scientific Hospital. All Rights Reserved.
+        </p>
 
-    const formData = new FormData(reviewForm);
+    </footer>
 
-    const reviewData = {
-        patientName: formData.get("patientName"),
-        rating: formData.get("rating"),
-        review: formData.get("review")
-    };
-
-    const response = await fetch("/api/reviews", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(reviewData)
-    });
-
-    const result = await response.json();
-
-    alert(result.message);
-
-    if (result.success) {
-        reviewForm.reset();
-    }
-});
-</script>
 </body>
 </html>
