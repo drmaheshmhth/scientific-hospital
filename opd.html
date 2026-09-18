@@ -1,233 +1,765 @@
 <!DOCTYPE html>
 <html lang="hi">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>OPD Appointment | Scientific Hospital</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Book OPD Appointment | Scientific Hospital | Dr. Mahesh Sah</title>
+
+    <meta name="description"
+          content="Book OPD appointment with Dr. Mahesh Sah at Scientific Hospital, Danapur, Patna.">
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f8fb;
+            color: #222;
+        }
+
+        .navbar {
+            background: #ffffff;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #1976d2;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #1976d2;
+        }
+
+        .opd-section {
+            padding: 40px 15px;
+        }
+
+        .opd-card {
+            max-width: 850px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.10);
+        }
+
+        .hospital-info {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .hospital-info h2 {
+            margin-bottom: 5px;
+            color: #1976d2;
+        }
+
+        .hospital-info h3 {
+            margin-top: 5px;
+            color: #333;
+        }
+
+        .hospital-info p {
+            line-height: 1.6;
+        }
+
+        .opd-card > h1 {
+            text-align: center;
+            color: #1976d2;
+            margin-top: 20px;
+        }
+
+        .opd-subtitle {
+            text-align: center;
+            color: #555;
+            font-size: 17px;
+        }
+
+        .opd-info-box {
+            background: #eef7ff;
+            border-left: 5px solid #1976d2;
+            padding: 18px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .opd-info-box h2 {
+            color: #1976d2;
+            margin-top: 0;
+        }
+
+        .opd-info-box h3 {
+            margin-bottom: 8px;
+        }
+
+        .opd-info-box p {
+            line-height: 1.6;
+        }
+
+        #selectedDay {
+            margin-top: 8px;
+            margin-bottom: 15px;
+        }
+
+        form {
+            margin-top: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #1976d2;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .opd-submit-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            background: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .opd-submit-btn:hover {
+            background: #125ca8;
+        }
+
+        .note-box {
+            background: #fff8e1;
+            border-left: 5px solid #ff9800;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 7px;
+        }
+
+        .site-footer {
+            text-align: center;
+            background: #17202a;
+            color: white;
+            padding: 30px 15px;
+            margin-top: 30px;
+        }
+
+        .site-footer h3 {
+            color: white;
+        }
+
+        .copyright {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .nav-links {
+                gap: 12px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .opd-card {
+                padding: 20px;
+            }
+
+            .opd-card > h1 {
+                font-size: 26px;
+            }
+
+            .hospital-info p {
+                font-size: 14px;
+            }
+        }
+
+    </style>
 </head>
+
 
 <body>
 
-    <nav class="navbar">
-        <div class="logo">Scientific Hospital</div>
 
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="index.html#doctor">Doctor</a>
-            <a href="index.html#specialized">Services</a>
-            <a href="index.html#contact">Contact</a>
-        </div>
-    </nav>
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        Scientific Hospital
+    </div>
+
+    <div class="nav-links">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="index.html#doctor">
+            Doctor
+        </a>
+
+        <a href="index.html#specialized">
+            Services
+        </a>
+
+        <a href="index.html#contact">
+            Contact
+        </a>
+
+    </div>
+
+</nav>
 
 
-    <section class="opd-section">
+<!-- ================= OPD SECTION ================= -->
 
-        <div class="opd-card">
-            <div class="hospital-info">
-    <h2>Scientific Hospital</h2>
-    <h3>Dr. Mahesh Sah</h3>
-    <p>📍 Vijay Vihar Colony, Near St. Karen's Secondary School, Khagaul Road, Danapur, Patna</p>
-    <p>📞 947 189 2335 | 📱 919 989 3278</p>
-</div>
+<section class="opd-section">
 
-            <h1>🩺 OPD Appointment</h1>
+    <div class="opd-card">
 
-            <p class="opd-subtitle">
-                Scientific Hospital में OPD Appointment Book करें
+
+        <!-- HOSPITAL INFORMATION -->
+
+        <div class="hospital-info">
+
+            <h2>
+                Scientific Hospital
+            </h2>
+
+            <h3>
+                Dr. Mahesh Sah
+            </h3>
+
+            <p>
+                📍 Vijay Vihar Colony, Near St. Karen's Secondary School,
+                Khagaul Road, Danapur, Patna
             </p>
-            <div class="opd-info-box">
-    <h2>🏥 SCIENTIFIC HOSPITAL</h2>
 
-    <p>📍 Vijay Vihar Colony, Near St. Karen's Secondary School, Khagaul Road, Danapur, Patna</p>
-
-    <h3>🕐 OPD Timing</h3>
-
-    <p><strong>Morning:</strong> 08:00 AM to 09:45 AM</p>
-    <p><strong>Evening:</strong> 04:00 PM to 05:45 PM</p>
-</div>
-<div class="opd-info-box">
-
-    <h2>🏥 SCIENTIFIC POLY CLINIC</h2>
-
-    <p>
-        📍 Infront of Gaurav ITI College, Hinduni Alampur,
-        Gonpura, Phulwari Sharif, Patna-801503
-    </p>
-
-    <h3>🕐 OPD Timing</h3>
-
-    <p><strong>Morning:</strong> 08:00 AM to 09:45 AM</p>
-    <p><strong>Evening:</strong> 04:00 PM to 05:45 PM</p>
-
-    <h3>🩺 Polypathic Cancer Nidan</h3>
-    <p><strong>Mahua Vaishali</strong></p>
-
-    <h3>📅 Weekly OPD — Every Sunday</h3>
-
-    <p><strong>Morning:</strong> 11:00 AM to 02:00 PM</p>
-    <p><strong>Evening:</strong> 05:00 PM to 08:30 PM</p>
-
-</div>
-
-            <form id="opdForm">
-
-                <label>Patient Name</label>
-                <input type="text" name="patientName"
-                       placeholder="मरीज का नाम" required>
-
-
-                <label>Mobile Number</label>
-                <input type="tel" name="mobile"
-                       placeholder="10 अंकों का मोबाइल नंबर"
-                       maxlength="10"
-                       required>
-
-
-                <label>Age</label>
-                <input type="number" name="age"
-                       placeholder="उम्र"
-                       min="1" max="120"
-                       required>
-
-
-                <label>Gender</label>
-
-                <select name="gender" required>
-                    <option value="">-- Gender चुनें --</option>
-                    <option value="Male">पुरुष</option>
-                    <option value="Female">महिला</option>
-                    <option value="Other">अन्य</option>
-                </select>
-
-
-                <label>Problem / बीमारी</label>
-
-                <textarea name="problem"
-                          placeholder="अपनी समस्या लिखें"
-                          rows="4"
-                          required></textarea>
-
-
-                <label>OPD Date</label>
-
-                <input type="date"
-                       name="opdDate"
-                       required>
-<p id="selectedDay" style="font-weight:bold; color:#1976d2;"></p>
-
-                <label>OPD Time</label>
-
-                <select name="opdTime" required>
-                <option value="Scientific Hospital - 10:00 AM - 01:00 PM">
-    🏥 Scientific Hospital - 10:00 AM - 01:00 PM
-</option>
-
-<option value="Scientific Hospital - 06:00 PM - 09:00 PM">
-    🏥 Scientific Hospital - 06:00 PM - 09:00 PM
-</option>
-
-<option value="Scientific Poly Clinic - 08:00 AM - 09:45 AM">
-    🏥 Scientific Poly Clinic - 08:00 AM - 09:45 AM
-</option>
-
-<option value="Scientific Poly Clinic - 04:00 PM - 05:45 PM">
-    🏥 Scientific Poly Clinic - 04:00 PM - 05:45 PM
-</option>
-
-<option value="Polypathic Cancer Nidan - Mahua Vaishali - Sunday 11:00 AM - 02:00 PM">
-    🩺 Polypathic Cancer Nidan - Mahua Vaishali - Sunday 11:00 AM - 02:00 PM
-</option>
-                </select>
-
-
-                <button type="submit" class="opd-submit-btn">
-                    📅 Book OPD Appointment
-                </button>
-
-            </form>
+            <p>
+                📞 947 189 2335 |
+                📱 919 989 3278
+            </p>
 
         </div>
 
-    </section>
 
+        <h1>
+            🩺 OPD Appointment
+        </h1>
 
-    <footer class="site-footer">
-
-        <h3>Scientific Hospital</h3>
-
-        <p>Dr. Mahesh Sah</p>
-
-        <p>📞 947 189 2335 | 📱 919 989 3278</p>
-
-        <p>📍 Vijay Vihar Colony, Danapur, Patna</p>
-
-        <p class="copyright">
-            © 2026 Scientific Hospital. All Rights Reserved.
+        <p class="opd-subtitle">
+            Scientific Hospital में OPD Appointment Book करें
         </p>
 
-    </footer>
+
+        <!-- ================= SCIENTIFIC HOSPITAL ================= -->
+
+        <div class="opd-info-box">
+
+            <h2>
+                🏥 SCIENTIFIC HOSPITAL
+            </h2>
+
+            <p>
+                📍 Vijay Vihar Colony, Near St. Karen's Secondary School,
+                Khagaul Road, Danapur, Patna
+            </p>
+
+            <h3>
+                🕐 OPD Timing
+            </h3>
+
+            <p>
+                <strong>Morning:</strong>
+                10:00 AM to 01:00 PM
+            </p>
+
+            <p>
+                <strong>Evening:</strong>
+                06:00 PM to 09:00 PM
+            </p>
+
+        </div>
+
+
+        <!-- ================= SCIENTIFIC POLY CLINIC ================= -->
+
+        <div class="opd-info-box">
+
+            <h2>
+                🏥 SCIENTIFIC POLY CLINIC
+            </h2>
+
+            <p>
+                📍 Infront of Gaurav ITI College,
+                Hinduni Alampur, Gonpura,
+                Phulwari Sharif, Patna - 801503
+            </p>
+
+            <h3>
+                🕐 OPD Timing
+            </h3>
+
+            <p>
+                <strong>Morning:</strong>
+                08:00 AM to 09:45 AM
+            </p>
+
+            <p>
+                <strong>Evening:</strong>
+                04:00 PM to 05:45 PM
+            </p>
+
+        </div>
+
+
+        <!-- ================= MAHUA VAISHALI ================= -->
+
+        <div class="opd-info-box">
+
+            <h2>
+                🩺 Polypathic Cancer Nidan
+            </h2>
+
+            <p>
+                <strong>Mahua, Vaishali</strong>
+            </p>
+
+            <h3>
+                📅 Weekly OPD — Every Sunday
+            </h3>
+
+            <p>
+                <strong>Morning:</strong>
+                11:00 AM to 02:00 PM
+            </p>
+
+            <p>
+                <strong>Evening:</strong>
+                05:00 PM to 08:30 PM
+            </p>
+
+        </div>
+
+
+        <!-- ================= IMPORTANT NOTE ================= -->
+
+        <div class="note-box">
+
+            <strong>
+                ⚠️ Important:
+            </strong>
+
+            <p>
+                कृपया appointment book करने से पहले
+                सही OPD date और location चुनें।
+            </p>
+
+        </div>
+
+
+        <!-- ================= OPD FORM ================= -->
+
+        <form
+            action="https://formspree.io/f/mwlppejk"
+            method="POST"
+            id="opdForm">
+
+
+            <!-- Email Subject -->
+
+            <input
+                type="hidden"
+                name="_subject"
+                value="New OPD Appointment - Scientific Hospital">
+
+
+            <!-- PATIENT NAME -->
+
+            <label for="patientName">
+                Patient Name
+            </label>
+
+            <input
+                type="text"
+                id="patientName"
+                name="patientName"
+                placeholder="मरीज का नाम"
+                required>
+
+
+            <!-- MOBILE -->
+
+            <label for="mobile">
+                Mobile Number
+            </label>
+
+            <input
+                type="tel"
+                id="mobile"
+                name="mobile"
+                placeholder="10 अंकों का मोबाइल नंबर"
+                maxlength="10"
+                pattern="[0-9]{10}"
+                inputmode="numeric"
+                required>
+
+
+            <!-- AGE -->
+
+            <label for="age">
+                Age
+            </label>
+
+            <input
+                type="number"
+                id="age"
+                name="age"
+                placeholder="उम्र"
+                min="1"
+                max="120"
+                required>
+
+
+            <!-- GENDER -->
+
+            <label for="gender">
+                Gender
+            </label>
+
+            <select
+                id="gender"
+                name="gender"
+                required>
+
+                <option value="">
+                    -- Gender चुनें --
+                </option>
+
+                <option value="Male">
+                    पुरुष
+                </option>
+
+                <option value="Female">
+                    महिला
+                </option>
+
+                <option value="Other">
+                    अन्य
+                </option>
+
+            </select>
+
+
+            <!-- PROBLEM -->
+
+            <label for="problem">
+                Problem / बीमारी
+            </label>
+
+            <textarea
+                id="problem"
+                name="problem"
+                placeholder="अपनी समस्या लिखें"
+                rows="4"
+                required></textarea>
+
+
+            <!-- OPD DATE -->
+
+            <label for="opdDate">
+                OPD Date
+            </label>
+
+            <input
+                type="date"
+                id="opdDate"
+                name="opdDate"
+                required>
+
+            <p
+                id="selectedDay"
+                style="font-weight:bold; color:#1976d2;">
+            </p>
+
+
+            <!-- OPD TIME / LOCATION -->
+
+            <label for="opdTime">
+                OPD Location & Time
+            </label>
+
+            <select
+                id="opdTime"
+                name="opdTime"
+                required>
+
+                <option value="">
+                    -- OPD Location & Time चुनें --
+                </option>
+
+                <option value="Scientific Hospital - 10:00 AM to 01:00 PM">
+                    🏥 Scientific Hospital -
+                    10:00 AM to 01:00 PM
+                </option>
+
+                <option value="Scientific Hospital - 06:00 PM to 09:00 PM">
+                    🏥 Scientific Hospital -
+                    06:00 PM to 09:00 PM
+                </option>
+
+                <option value="Scientific Poly Clinic - 08:00 AM to 09:45 AM">
+                    🏥 Scientific Poly Clinic -
+                    08:00 AM to 09:45 AM
+                </option>
+
+                <option value="Scientific Poly Clinic - 04:00 PM to 05:45 PM">
+                    🏥 Scientific Poly Clinic -
+                    04:00 PM to 05:45 PM
+                </option>
+
+                <option value="Polypathic Cancer Nidan - Mahua Vaishali - Sunday - 11:00 AM to 02:00 PM">
+                    🩺 Mahua Vaishali -
+                    Sunday 11:00 AM to 02:00 PM
+                </option>
+
+                <option value="Polypathic Cancer Nidan - Mahua Vaishali - Sunday - 05:00 PM to 08:30 PM">
+                    🩺 Mahua Vaishali -
+                    Sunday 05:00 PM to 08:30 PM
+                </option>
+
+            </select>
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                class="opd-submit-btn">
+
+                📅 Book OPD Appointment
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="site-footer">
+
+    <h3>
+        Scientific Hospital
+    </h3>
+
+    <p>
+        Dr. Mahesh Sah
+    </p>
+
+    <p>
+        📞 947 189 2335 |
+        📱 919 989 3278
+    </p>
+
+    <p>
+        📍 Vijay Vihar Colony,
+        Danapur, Patna
+    </p>
+
+    <p class="copyright">
+        © 2026 Scientific Hospital.
+        All Rights Reserved.
+    </p>
+
+</footer>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
 <script>
-    const opdDate = document.querySelector('input[name="opdDate"]');
-const opdTime = document.querySelector('select[name="opdTime"]');
 
-opdDate.addEventListener("change", function () {
-    const date = new Date(this.value);
-    document.getElementById("selectedDay").textContent =
-    "📅 Day: " + date.toLocaleDateString("en-US", { weekday: "long" });
-    const day = date.getDay();
+    const opdDate =
+        document.getElementById("opdDate");
 
-    Array.from(opdTime.options).forEach(function (option) {
+    const opdTime =
+        document.getElementById("opdTime");
 
-    if (option.value.includes("Scientific Hospital")) {
-        option.disabled = false;
+    const selectedDay =
+        document.getElementById("selectedDay");
 
-    } else if (option.value.includes("Sunday")) {
-        option.disabled = day !== 0;
 
-    } else if (option.value.includes("Scientific Poly Clinic")) {
-        option.disabled = day === 0;
-    }
+    // Today's date as minimum date
 
-});
+    const today =
+        new Date().toISOString().split("T")[0];
 
-    opdTime.value = "";
-});
-const form = document.getElementById("opdForm");
+    opdDate.min = today;
 
-form.addEventListener("submit", async function(event) {
-    event.preventDefault();
 
-    const formData = new FormData(form);
+    // When date changes
 
-    const appointment = {
-        patientName: formData.get("patientName"),
-        mobile: formData.get("mobile"),
-        age: formData.get("age"),
-        gender: formData.get("gender"),
-        problem: formData.get("problem"),
-        opdDate: formData.get("opdDate"),
-        opdTime: formData.get("opdTime")
-    };
+    opdDate.addEventListener("change", function () {
 
-    const response = await fetch("/api/appointments", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(appointment)
+        if (!this.value) {
+            return;
+        }
+
+
+        const date =
+            new Date(this.value + "T00:00:00");
+
+
+        const day =
+            date.getDay();
+
+
+        const dayName =
+            date.toLocaleDateString(
+                "en-IN",
+                {
+                    weekday: "long"
+                }
+            );
+
+
+        selectedDay.textContent =
+            "📅 Selected Day: " + dayName;
+
+
+        // Get all options
+
+        const options =
+            Array.from(opdTime.options);
+
+
+        options.forEach(function (option) {
+
+            // First empty option
+
+            if (option.value === "") {
+                option.disabled = false;
+                return;
+            }
+
+
+            // Scientific Hospital
+            // Available every day
+
+            if (
+                option.value.includes(
+                    "Scientific Hospital"
+                )
+            ) {
+
+                option.disabled = false;
+
+            }
+
+
+            // Scientific Poly Clinic
+            // Not available on Sunday
+
+            else if (
+                option.value.includes(
+                    "Scientific Poly Clinic"
+                )
+            ) {
+
+                option.disabled =
+                    (day === 0);
+
+            }
+
+
+            // Mahua Vaishali
+            // Available only Sunday
+
+            else if (
+                option.value.includes(
+                    "Mahua Vaishali"
+                )
+            ) {
+
+                option.disabled =
+                    (day !== 0);
+
+            }
+
+        });
+
+
+        // Reset selected time
+
+        opdTime.value = "";
+
     });
 
-    const result = await response.json();
 
-    alert(result.message);
-
-    if (result.success) {
-        form.reset();
-    }
-});
 </script>
+
+
 </body>
 </html>
