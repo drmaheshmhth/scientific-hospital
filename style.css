@@ -2092,3 +2092,38 @@ html {
         font-size: 15px;
     }
 }
+/* ================================
+   MOBILE REVIEW SLIDER FIX
+   ================================ */
+
+@media (max-width: 768px) {
+
+    .review-carousel {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .review-track {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        width: 100%;
+        overflow: hidden;
+        transition: transform 0.4s ease;
+    }
+
+    .patient-review {
+        flex: 0 0 100% !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    .review-carousel .review-track > * {
+        flex: 0 0 100% !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box;
+    }
+
+}
