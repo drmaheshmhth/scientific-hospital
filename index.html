@@ -1172,363 +1172,228 @@
 
 <script>
 
-/* =========================================
-   SUPABASE CONFIG
-========================================= */
-
-const SUPABASE_URL =
-    "https://nahkiyarervemutsaxhz.supabase.co";
-
-const SUPABASE_KEY =
-    "sb_publishable_IoRYIT_3RoKomvTw24ETPw_9N8oO3I1";
-
 
 /* =========================================
-   LOAD HOMEPAGE REVIEWS
-========================================= */
+   PATIENT REVIEW SLIDER
+   ========================================= */
 
-let currentReview = 0;
-let startX = 0;
-let endX = 0;
+document.addEventListener("DOMContentLoaded", function () {
 
+    const carousel = document.querySelector(".review-carousel");
+    const reviewList = document.getElementById("reviewsList");
 
-async function loadHomepageReviews() {
+    if (!carousel || !reviewList) return;
 
-    const reviewsList =
-        document.getElementById("reviewsList");
+    const buttons = carousel.querySelectorAll("button");
 
-    if (!reviewsList) return;
+    if (buttons.length < 2) return;
 
+    const prevButton = buttons[0];
+    const nextButton = buttons[buttons.length - 1];
 
-    try {
+    let currentIndex = 0;
+    let reviews = [];
 
-        const response = await fetch(
+    /* -----------------------------------------
+       LOAD REVIEWS
+       ----------------------------------------- */
 
-            SUPABASE_URL +
-            "/rest/v1/reviews?select=patient_name,rating,review,created_at&order=created_at.desc",
+    async function loadReviews() {
 
-            {
-                method: "GET",
+        try {
 
-                headers: {
-                    "apikey": SUPABASE_KEY,
-                    "Authorization":
-                        "Bearer " + SUPABASE_KEY
-                }
+            const response = await fetch("/api/reviews");
+
+            if (!response.ok) {
+                throw new Error("Reviews could not be loaded");
             }
 
-        );
+            const data = await response.json();
+
+            reviews = Array.isArray(data) ? data : [];
+
+            if (reviews.length === 0) {
+                reviewList.innerHTML =
+                    '<p class="no-home-reviews">No reviews yet.</p>';
+                return;
+            }
+
+            showReviews();
+
+        } catch (error) {
+
+            console.error("Review Error:", error);
+
+            reviewList.innerHTML =
+                '<p class="no-home-reviews">Reviews load nahi ho pa rahe hain.</p>';
+        }
+    }
 
 
-        if (!response.ok) {
+    /* -----------------------------------------
+       SHOW ALL REVIEWS
+       ----------------------------------------- */
 
-            throw new Error(
-                "Reviews could not be loaded"
+    function showReviews() {
+
+        reviewList.innerHTML = "";
+
+        reviews.forEach(function (review) {
+
+            const card = document.createElement("div");
+
+            card.className = "patient-review";
+
+            const rating = Math.min(
+                5,
+                Math.max(
+                    0,
+                    Number(review.rating) || 0
+                )
             );
 
+            const stars =
+                "★".repeat(rating) +
+                "☆".repeat(5 - rating);
+
+            card.innerHTML = `
+                <strong class="review-name">
+                    ${escapeHTML(review.patient_name || "Patient")}
+                </strong>
+
+                <div class="review-stars">
+                    ${stars}
+                </div>
+
+                <p class="review-text">
+                    ${escapeHTML(review.review || "")}
+                </p>
+
+                <button
+                    type="button"
+                    class="read-more-btn"
+                    onclick="toggleReview(this)">
+                    Read More
+                </button>
+            `;
+
+            reviewList.appendChild(card);
+        });
+
+        currentIndex = 0;
+
+        updateSlider();
+    }
+
+
+    /* -----------------------------------------
+       MOVE SLIDER
+       ----------------------------------------- */
+
+    function updateSlider() {
+
+        const cards =
+            reviewList.querySelectorAll(".patient-review");
+
+        if (!cards.length) return;
+
+        reviewList.style.display = "flex";
+        reviewList.style.flexWrap = "nowrap";
+        reviewList.style.transition = "transform 0.4s ease";
+
+        reviewList.style.transform =
+            "translateX(-" + (currentIndex * 100) + "%)";
+
+        /* Previous button */
+
+        prevButton.disabled = currentIndex === 0;
+
+        /* Next button */
+
+        nextButton.disabled =
+            currentIndex === cards.length - 1;
+    }
+
+
+    /* -----------------------------------------
+       NEXT BUTTON
+       ----------------------------------------- */
+
+    nextButton.addEventListener("click", function () {
+
+        const cards =
+            reviewList.querySelectorAll(".patient-review");
+
+        if (currentIndex < cards.length - 1) {
+
+            currentIndex++;
+
+            updateSlider();
         }
+    });
 
 
-        const reviews =
-            await response.json();
+    /* -----------------------------------------
+       PREVIOUS BUTTON
+       ----------------------------------------- */
 
+    prevButton.addEventListener("click", function () {
 
-        if (reviews.length === 0) {
+        if (currentIndex > 0) {
 
-            reviewsList.innerHTML =
-                '<p class="no-home-reviews">No reviews yet.</p>';
+            currentIndex--;
 
-            return;
-
+            updateSlider();
         }
+    });
 
 
-        /* =====================================
-           CREATE REVIEW CARDS
-        ===================================== */
+    /* -----------------------------------------
+       READ MORE / READ LESS
+       ----------------------------------------- */
 
-        reviewsList.innerHTML =
-            reviews.map(function(item) {
+    window.toggleReview = function (button) {
 
-                const rating =
-                    Math.min(
-                        5,
-                        Math.max(
-                            0,
-                            Number(item.rating) || 0
-                        )
-                    );
+        const text =
+            button.previousElementSibling;
 
+        if (!text) return;
 
-                const stars =
-                    "★".repeat(rating) +
-                    "☆".repeat(5 - rating);
+        text.classList.toggle("expanded");
 
+        if (text.classList.contains("expanded")) {
 
-                return `
+            button.textContent = "Read Less";
 
-                    <div class="home-review-card">
+        } else {
 
-                        <div class="home-review-name">
-
-                            ${escapeHomepageHtml(
-                                item.patient_name
-                            )}
-
-                        </div>
+            button.textContent = "Read More";
+        }
+    };
 
 
-                        <div class="home-review-stars">
+    /* -----------------------------------------
+       SECURITY
+       ----------------------------------------- */
 
-                            ${stars}
+    function escapeHTML(text) {
 
-                        </div>
+        const div =
+            document.createElement("div");
 
+        div.textContent = text || "";
 
-                        <div class="home-review-text">
-
-                            ${escapeHomepageHtml(
-                                item.review
-                            )}
-
-                        </div>
-
-
-                        <button
-                            class="home-read-more"
-                            type="button"
-                            onclick="toggleHomeReview(this)"
-                        >
-                            Read More
-                        </button>
-
-                    </div>
-
-                `;
-
-            }).join("");
-
-
-        /* Start swipe */
-
-        setupReviewSwipe();
-
+        return div.innerHTML;
     }
 
 
-    catch (error) {
+    /* -----------------------------------------
+       START
+       ----------------------------------------- */
 
-        console.error(
-            "Review Error:",
-            error
-        );
+    loadReviews();
 
-
-        reviewsList.innerHTML =
-            '<p class="no-home-reviews">Reviews load nahi ho pa rahe hain.</p>';
-
-    }
-
-}
-
-
-/* =========================================
-   SWIPE SETUP
-========================================= */
-
-function setupReviewSwipe() {
-
-    const track =
-        document.getElementById("reviewsList");
-
-    if (!track) return;
-
-
-    track.addEventListener(
-        "touchstart",
-        function(event) {
-
-            startX =
-                event.touches[0].clientX;
-
-        },
-        { passive: true }
-    );
-
-
-    track.addEventListener(
-        "touchend",
-        function(event) {
-
-            endX =
-                event.changedTouches[0].clientX;
-
-
-            const difference =
-                startX - endX;
-
-
-            /* Swipe Left */
-
-            if (difference > 50) {
-
-                nextReview();
-
-            }
-
-
-            /* Swipe Right */
-
-            else if (difference < -50) {
-
-                previousReview();
-
-            }
-
-        },
-        { passive: true }
-    );
-
-}
-
-
-/* =========================================
-   NEXT REVIEW
-========================================= */
-
-function nextReview() {
-
-    const track =
-        document.getElementById("reviewsList");
-
-    if (!track) return;
-
-
-    const cards =
-        track.querySelectorAll(
-            ".home-review-card"
-        );
-
-
-    if (cards.length <= 1) return;
-
-
-    if (
-        currentReview <
-        cards.length - 1
-    ) {
-
-        currentReview++;
-
-        track.style.transform =
-            "translateX(-" +
-            (currentReview * 100) +
-            "%)";
-
-    }
-
-}
-
-
-/* =========================================
-   PREVIOUS REVIEW
-========================================= */
-
-function previousReview() {
-
-    const track =
-        document.getElementById("reviewsList");
-
-    if (!track) return;
-
-
-    const cards =
-        track.querySelectorAll(
-            ".home-review-card"
-        );
-
-
-    if (cards.length <= 1) return;
-
-
-    if (currentReview > 0) {
-
-        currentReview--;
-
-        track.style.transform =
-            "translateX(-" +
-            (currentReview * 100) +
-            "%)";
-
-    }
-
-}
-
-
-/* =========================================
-   READ MORE / READ LESS
-========================================= */
-
-function toggleHomeReview(button) {
-
-    const reviewText =
-        button.previousElementSibling;
-
-
-    if (!reviewText) return;
-
-
-    reviewText.classList.toggle(
-        "expanded"
-    );
-
-
-    if (
-        reviewText.classList.contains(
-            "expanded"
-        )
-    ) {
-
-        button.textContent =
-            "Read Less";
-
-    }
-
-    else {
-
-        button.textContent =
-            "Read More";
-
-    }
-
-}
-
-
-/* =========================================
-   SECURITY
-========================================= */
-
-function escapeHomepageHtml(text) {
-
-    const div =
-        document.createElement("div");
-
-
-    div.textContent =
-        text || "";
-
-
-    return div.innerHTML;
-
-}
-
-
-/* =========================================
-   START
-========================================= */
-
-loadHomepageReviews();
-
+});
 </script>
 
 </body>
