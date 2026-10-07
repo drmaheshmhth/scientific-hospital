@@ -1935,3 +1935,246 @@ html {
         padding: 13px 24px;
     }
 }
+/* =====================================
+   PATIENT REVIEWS - SWIPE CARDS
+===================================== */
+
+.reviews-section {
+    padding: 45px 15px;
+    background: #f7f9fc;
+    text-align: center;
+    overflow: hidden;
+}
+
+.reviews-section h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    color: #1769aa;
+}
+
+.reviews-subtitle {
+    max-width: 650px;
+    margin: 0 auto 25px;
+    color: #666;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+
+/* =====================================
+   SWIPE AREA
+===================================== */
+
+.reviews-slider {
+    display: flex;
+    gap: 18px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 10px 5px 20px;
+
+    scroll-snap-type: x mandatory;
+
+    -webkit-overflow-scrolling: touch;
+
+    scrollbar-width: none;
+}
+
+.reviews-slider::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* =====================================
+   REVIEW CARD
+===================================== */
+
+.home-review-card {
+
+    flex: 0 0 320px;
+
+    background: #ffffff;
+
+    border-radius: 18px;
+
+    padding: 22px 20px;
+
+    text-align: center;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.10);
+
+    scroll-snap-align: center;
+
+    box-sizing: border-box;
+}
+
+
+/* =====================================
+   PATIENT NAME
+===================================== */
+
+.home-review-name {
+
+    font-size: 20px;
+
+    font-weight: 600;
+
+    color: #222;
+
+    margin-bottom: 7px;
+}
+
+
+/* =====================================
+   STARS
+===================================== */
+
+.home-review-stars {
+
+    font-size: 21px;
+
+    color: #f5b400;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 12px;
+}
+
+
+/* =====================================
+   REVIEW TEXT
+===================================== */
+
+.home-review-text {
+
+    color: #444;
+
+    font-size: 15px;
+
+    line-height: 1.65;
+
+    max-height: 95px;
+
+    overflow: hidden;
+
+    text-align: center;
+
+    transition: max-height 0.35s ease;
+}
+
+
+/* FULL REVIEW */
+
+.home-review-text.expanded {
+
+    max-height: 1000px;
+}
+
+
+/* =====================================
+   READ MORE
+===================================== */
+
+.home-read-more {
+
+    border: none;
+
+    background: transparent;
+
+    color: #1976d2;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    margin-top: 10px;
+
+    padding: 5px 8px;
+}
+
+.home-read-more:hover {
+
+    text-decoration: underline;
+}
+
+
+/* =====================================
+   NO REVIEW
+===================================== */
+
+.no-home-reviews {
+
+    width: 100%;
+
+    text-align: center;
+
+    color: #777;
+
+    padding: 20px;
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 600px) {
+
+    .reviews-section {
+
+        padding: 35px 10px;
+    }
+
+    .reviews-section h2 {
+
+        font-size: 27px;
+    }
+
+    .reviews-subtitle {
+
+        font-size: 14px;
+
+        padding: 0 10px;
+    }
+
+    .reviews-slider {
+
+        gap: 14px;
+
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .home-review-card {
+
+        flex: 0 0 85%;
+
+        padding: 20px 17px;
+
+        border-radius: 16px;
+    }
+
+    .home-review-name {
+
+        font-size: 19px;
+    }
+
+    .home-review-stars {
+
+        font-size: 20px;
+    }
+
+    .home-review-text {
+
+        font-size: 14px;
+
+        line-height: 1.6;
+
+        max-height: 85px;
+    }
+
+}

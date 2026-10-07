@@ -1265,6 +1265,7 @@ const SUPABASE_URL = "https://nahkiyarervemutsaxhz.supabase.co";
 const SUPABASE_KEY =
     "sb_publishable_IoRYIT_3RoKomvTw24ETPw_9N8oO3I1";
 
+
 async function loadHomepageReviews() {
 
     const reviewsList = document.getElementById("reviewsList");
@@ -1299,6 +1300,7 @@ async function loadHomepageReviews() {
             return;
         }
 
+
         reviewsList.innerHTML = reviews.map(function(item) {
 
             const rating = Number(item.rating) || 0;
@@ -1308,7 +1310,7 @@ async function loadHomepageReviews() {
                 "☆".repeat(5 - rating);
 
             return `
-                <div class="home-review-item">
+                <div class="home-review-card">
 
                     <div class="home-review-name">
                         ${escapeHomepageHtml(item.patient_name)}
@@ -1322,10 +1324,17 @@ async function loadHomepageReviews() {
                         ${escapeHomepageHtml(item.review)}
                     </div>
 
+                    <button
+                        class="home-read-more"
+                        onclick="toggleHomeReview(this)">
+                        Read More
+                    </button>
+
                 </div>
             `;
 
         }).join("");
+
 
     } catch (error) {
 
@@ -1337,6 +1346,32 @@ async function loadHomepageReviews() {
 }
 
 
+/* =========================
+   READ MORE / READ LESS
+========================= */
+
+function toggleHomeReview(button) {
+
+    const reviewText =
+        button.previousElementSibling;
+
+    reviewText.classList.toggle("expanded");
+
+    if (reviewText.classList.contains("expanded")) {
+
+        button.textContent = "Read Less";
+
+    } else {
+
+        button.textContent = "Read More";
+    }
+}
+
+
+/* =========================
+   SECURITY
+========================= */
+
 function escapeHomepageHtml(text) {
 
     const div = document.createElement("div");
@@ -1347,7 +1382,10 @@ function escapeHomepageHtml(text) {
 }
 
 
+/* LOAD REVIEWS */
+
 loadHomepageReviews();
+
 </script>
 
 </body>
