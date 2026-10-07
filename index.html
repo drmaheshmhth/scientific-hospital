@@ -339,35 +339,37 @@
 
 <section class="reviews-section">
 
-    <h2>⭐ Patient Reviews</h2>
+    <h2>⭐ Dr. Mahesh Sah - Patient Reviews</h2>
 
     <p class="reviews-subtitle">
-        Your feedback helps us provide better healthcare.
+        Your experience and feedback about Dr. Mahesh Sah and Scientific Hospital are important to us.
     </p>
 
+    <div class="review-carousel">
 
-    <div class="review-card">
+    <button
+        class="review-arrow review-prev"
+        onclick="previousReview()"
+        type="button">
+        ❮
+    </button>
 
-        <div class="review-stars">
-            ★★★★★
-        </div>
-
-        <h3>
-            Dr. Mahesh Sah - Patient Reviews
-        </h3>
-
-        <p>
-            Your experience and feedback about Dr. Mahesh Sah
-            and Scientific Hospital are important to us.
-        </p>
-
-        <div id="reviewsList"></div>
-
-        <a href="review.html" class="review-btn">
-            ⭐ Write a Review
-        </a>
-
+    <div class="review-track" id="reviewsList">
+        <!-- Reviews will come from Supabase -->
     </div>
+
+    <button
+        class="review-arrow review-next"
+        onclick="nextReview()"
+        type="button">
+        ❯
+    </button>
+
+</div>
+
+    <a href="review.html" class="review-btn">
+        ⭐ Write a Review
+    </a>
 
 </section>
 
@@ -1168,129 +1170,68 @@
 </div>
 
 
-<!-- ================= JAVASCRIPT ================= -->
-
 <script>
 
-async function loadReviews() {
+/* =========================================
+   SUPABASE CONFIG
+========================================= */
 
-    try {
-
-        const response = await fetch("/api/reviews");
-
-        if (!response.ok) {
-            return;
-        }
-
-        const reviews = await response.json();
-
-        const reviewsList =
-            document.getElementById("reviewsList");
-
-        reviewsList.innerHTML = "";
-
-        reviews.forEach(function(review) {
-
-            const reviewItem =
-                document.createElement("div");
-
-            reviewItem.className =
-                "patient-review";
-
-            const rating =
-                Math.min(5, Math.max(0, Number(review.rating) || 0));
-
-            reviewItem.innerHTML = `
-                <strong>${review.patientName || "Patient"}</strong>
-                <div class="review-stars">
-                    ${"★".repeat(rating)}
-                </div>
-                <p>${review.review || ""}</p>
-            `;
-
-            reviewsList.appendChild(reviewItem);
-
-        });
-
-    } catch (error) {
-
-        console.log("Reviews could not be loaded.");
-
-    }
-
-}
-
-
-function openLightbox(image) {
-
-    const lightbox =
-        document.getElementById("imageLightbox");
-
-    const lightboxImage =
-        document.getElementById("lightboxImage");
-
-    lightboxImage.src = image;
-
-    lightbox.style.display = "flex";
-
-}
-
-
-function closeLightbox() {
-
-    const lightbox =
-        document.getElementById("imageLightbox");
-
-    lightbox.style.display = "none";
-
-}
-
-
-document.getElementById("imageLightbox")
-    .addEventListener("click", function(event) {
-
-        if (event.target === this) {
-            closeLightbox();
-        }
-
-    });
-
-
-loadReviews();
-
-</script>
-<script>
-const SUPABASE_URL = "https://nahkiyarervemutsaxhz.supabase.co";
+const SUPABASE_URL =
+    "https://nahkiyarervemutsaxhz.supabase.co";
 
 const SUPABASE_KEY =
     "sb_publishable_IoRYIT_3RoKomvTw24ETPw_9N8oO3I1";
 
 
+/* =========================================
+   LOAD HOMEPAGE REVIEWS
+========================================= */
+
+let currentReview = 0;
+let startX = 0;
+let endX = 0;
+
+
 async function loadHomepageReviews() {
 
-    const reviewsList = document.getElementById("reviewsList");
+    const reviewsList =
+        document.getElementById("reviewsList");
 
     if (!reviewsList) return;
+
 
     try {
 
         const response = await fetch(
+
             SUPABASE_URL +
             "/rest/v1/reviews?select=patient_name,rating,review,created_at&order=created_at.desc",
+
             {
                 method: "GET",
+
                 headers: {
                     "apikey": SUPABASE_KEY,
-                    "Authorization": "Bearer " + SUPABASE_KEY
+                    "Authorization":
+                        "Bearer " + SUPABASE_KEY
                 }
             }
+
         );
 
+
         if (!response.ok) {
-            throw new Error("Reviews could not be loaded");
+
+            throw new Error(
+                "Reviews could not be loaded"
+            );
+
         }
 
-        const reviews = await response.json();
+
+        const reviews =
+            await response.json();
+
 
         if (reviews.length === 0) {
 
@@ -1298,91 +1239,293 @@ async function loadHomepageReviews() {
                 '<p class="no-home-reviews">No reviews yet.</p>';
 
             return;
+
         }
 
 
-        reviewsList.innerHTML = reviews.map(function(item) {
+        /* =====================================
+           CREATE REVIEW CARDS
+        ===================================== */
 
-            const rating = Number(item.rating) || 0;
+        reviewsList.innerHTML =
+            reviews.map(function(item) {
 
-            const stars =
-                "★".repeat(rating) +
-                "☆".repeat(5 - rating);
+                const rating =
+                    Math.min(
+                        5,
+                        Math.max(
+                            0,
+                            Number(item.rating) || 0
+                        )
+                    );
 
-            return `
-                <div class="home-review-card">
 
-                    <div class="home-review-name">
-                        ${escapeHomepageHtml(item.patient_name)}
+                const stars =
+                    "★".repeat(rating) +
+                    "☆".repeat(5 - rating);
+
+
+                return `
+
+                    <div class="home-review-card">
+
+                        <div class="home-review-name">
+
+                            ${escapeHomepageHtml(
+                                item.patient_name
+                            )}
+
+                        </div>
+
+
+                        <div class="home-review-stars">
+
+                            ${stars}
+
+                        </div>
+
+
+                        <div class="home-review-text">
+
+                            ${escapeHomepageHtml(
+                                item.review
+                            )}
+
+                        </div>
+
+
+                        <button
+                            class="home-read-more"
+                            type="button"
+                            onclick="toggleHomeReview(this)"
+                        >
+                            Read More
+                        </button>
+
                     </div>
 
-                    <div class="home-review-stars">
-                        ${stars}
-                    </div>
+                `;
 
-                    <div class="home-review-text">
-                        ${escapeHomepageHtml(item.review)}
-                    </div>
-
-                    <button
-                        class="home-read-more"
-                        onclick="toggleHomeReview(this)">
-                        Read More
-                    </button>
-
-                </div>
-            `;
-
-        }).join("");
+            }).join("");
 
 
-    } catch (error) {
+        /* Start swipe */
 
-        console.error("Review Error:", error);
+        setupReviewSwipe();
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Review Error:",
+            error
+        );
+
 
         reviewsList.innerHTML =
             '<p class="no-home-reviews">Reviews load nahi ho pa rahe hain.</p>';
+
     }
+
 }
 
 
-/* =========================
+/* =========================================
+   SWIPE SETUP
+========================================= */
+
+function setupReviewSwipe() {
+
+    const track =
+        document.getElementById("reviewsList");
+
+    if (!track) return;
+
+
+    track.addEventListener(
+        "touchstart",
+        function(event) {
+
+            startX =
+                event.touches[0].clientX;
+
+        },
+        { passive: true }
+    );
+
+
+    track.addEventListener(
+        "touchend",
+        function(event) {
+
+            endX =
+                event.changedTouches[0].clientX;
+
+
+            const difference =
+                startX - endX;
+
+
+            /* Swipe Left */
+
+            if (difference > 50) {
+
+                nextReview();
+
+            }
+
+
+            /* Swipe Right */
+
+            else if (difference < -50) {
+
+                previousReview();
+
+            }
+
+        },
+        { passive: true }
+    );
+
+}
+
+
+/* =========================================
+   NEXT REVIEW
+========================================= */
+
+function nextReview() {
+
+    const track =
+        document.getElementById("reviewsList");
+
+    if (!track) return;
+
+
+    const cards =
+        track.querySelectorAll(
+            ".home-review-card"
+        );
+
+
+    if (cards.length <= 1) return;
+
+
+    if (
+        currentReview <
+        cards.length - 1
+    ) {
+
+        currentReview++;
+
+        track.style.transform =
+            "translateX(-" +
+            (currentReview * 100) +
+            "%)";
+
+    }
+
+}
+
+
+/* =========================================
+   PREVIOUS REVIEW
+========================================= */
+
+function previousReview() {
+
+    const track =
+        document.getElementById("reviewsList");
+
+    if (!track) return;
+
+
+    const cards =
+        track.querySelectorAll(
+            ".home-review-card"
+        );
+
+
+    if (cards.length <= 1) return;
+
+
+    if (currentReview > 0) {
+
+        currentReview--;
+
+        track.style.transform =
+            "translateX(-" +
+            (currentReview * 100) +
+            "%)";
+
+    }
+
+}
+
+
+/* =========================================
    READ MORE / READ LESS
-========================= */
+========================================= */
 
 function toggleHomeReview(button) {
 
     const reviewText =
         button.previousElementSibling;
 
-    reviewText.classList.toggle("expanded");
 
-    if (reviewText.classList.contains("expanded")) {
+    if (!reviewText) return;
 
-        button.textContent = "Read Less";
 
-    } else {
+    reviewText.classList.toggle(
+        "expanded"
+    );
 
-        button.textContent = "Read More";
+
+    if (
+        reviewText.classList.contains(
+            "expanded"
+        )
+    ) {
+
+        button.textContent =
+            "Read Less";
+
     }
+
+    else {
+
+        button.textContent =
+            "Read More";
+
+    }
+
 }
 
 
-/* =========================
+/* =========================================
    SECURITY
-========================= */
+========================================= */
 
 function escapeHomepageHtml(text) {
 
-    const div = document.createElement("div");
+    const div =
+        document.createElement("div");
 
-    div.textContent = text || "";
+
+    div.textContent =
+        text || "";
+
 
     return div.innerHTML;
+
 }
 
 
-/* LOAD REVIEWS */
+/* =========================================
+   START
+========================================= */
 
 loadHomepageReviews();
 

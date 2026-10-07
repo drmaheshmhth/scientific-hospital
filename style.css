@@ -1935,112 +1935,113 @@ html {
         padding: 13px 24px;
     }
 }
-/* =========================================
-   ONE REVIEW CARD SLIDER
-========================================= */
+/* ===============================
+   PATIENT REVIEWS SLIDER
+================================ */
 
-.reviews-slider {
+.reviews-section {
     width: 100%;
-    max-width: 650px;
-    margin: 25px auto 0;
-
-    display: flex !important;
-    flex-direction: row !important;
-
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-
-    -webkit-overflow-scrolling: touch;
-
-    scrollbar-width: none;
-
-    gap: 0 !important;
-
-    padding: 0 !important;
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px 20px;
+    text-align: center;
+    box-sizing: border-box;
 }
 
-.reviews-slider::-webkit-scrollbar {
-    display: none;
+.reviews-section h2 {
+    font-size: 32px;
+    color: #222;
+    margin-bottom: 15px;
+}
+
+.reviews-subtitle {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 30px;
 }
 
 
-/* ONE CARD = FULL SLIDE */
+/* Slider window */
 
-.reviews-slider > .home-review-card {
-    flex: 0 0 100% !important;
-    width: 100% !important;
-    min-width: 100% !important;
+.review-carousel {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
 
+
+/* Slider track */
+
+.review-track {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    transition: transform 0.45s ease;
+}
+
+
+/* One review = one slide */
+
+.home-review-card {
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 100%;
     box-sizing: border-box;
 
-    scroll-snap-align: center;
+    background: #fff;
 
-    margin: 0 !important;
+    padding: 28px 22px;
 
-    background: #ffffff;
+    border-radius: 18px;
 
-    border-radius: 20px;
-
-    padding: 28px 24px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.10);
 
     text-align: center;
-
-    box-shadow: 0 5px 20px rgba(0,0,0,0.10);
 }
 
 
-/* NAME */
+/* Patient name */
 
 .home-review-name {
-    font-size: 22px;
+    font-size: 23px;
     font-weight: 700;
     color: #222;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 
-/* STARS */
+/* Stars */
 
 .home-review-stars {
+    color: #f2b500;
     font-size: 24px;
-    color: #f5b400;
     letter-spacing: 3px;
     margin-bottom: 18px;
 }
 
 
-/* REVIEW */
+/* Review text */
 
 .home-review-text {
     font-size: 16px;
     line-height: 1.7;
     color: #555;
 
-    max-height: 125px;
-
+    max-height: 120px;
     overflow: hidden;
 
     transition: max-height 0.3s ease;
 }
 
 
-/* FULL REVIEW */
-
-.home-review-text.expanded {
-    max-height: 1000px;
-}
-
-
-/* READ MORE */
+/* Read more */
 
 .home-read-more {
     margin-top: 12px;
 
     border: none;
-    background: transparent;
+    background: none;
 
     color: #1976d2;
 
@@ -2051,22 +2052,32 @@ html {
 }
 
 
-/* MOBILE */
+/* Full review */
+
+.home-review-text.expanded {
+    max-height: 1000px;
+}
+
+
+/* Mobile */
 
 @media (max-width: 600px) {
 
-    .reviews-slider {
-        width: 100%;
-        max-width: 100%;
+    .reviews-section {
+        padding: 25px 15px;
+        margin: 25px auto;
     }
 
-    .reviews-slider > .home-review-card {
-        flex: 0 0 100% !important;
-        min-width: 100% !important;
+    .reviews-section h2 {
+        font-size: 27px;
+    }
 
-        padding: 25px 20px;
+    .reviews-subtitle {
+        font-size: 16px;
+    }
 
-        border-radius: 18px;
+    .home-review-card {
+        padding: 25px 18px;
     }
 
     .home-review-name {
@@ -2079,7 +2090,5 @@ html {
 
     .home-review-text {
         font-size: 15px;
-        line-height: 1.65;
-        max-height: 115px;
     }
 }
