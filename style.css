@@ -2107,8 +2107,9 @@ html {
     .review-track {
         display: flex !important;
         flex-wrap: nowrap !important;
-        width: 100%;
-        overflow: hidden;
+        width: 300% !important;
+        overflow: visible !important;
+        position: relative;
         transition: transform 0.4s ease;
     }
 
