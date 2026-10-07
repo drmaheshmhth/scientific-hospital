@@ -1259,7 +1259,96 @@ document.getElementById("imageLightbox")
 loadReviews();
 
 </script>
+<script>
+const SUPABASE_URL = "https://nahkiyarervemutsaxhz.supabase.co";
 
+const SUPABASE_KEY =
+    "sb_publishable_IoRYIT_3RoKomvTw24ETPw_9N8oO3I1";
+
+async function loadHomepageReviews() {
+
+    const reviewsList = document.getElementById("reviewsList");
+
+    if (!reviewsList) return;
+
+    try {
+
+        const response = await fetch(
+            SUPABASE_URL +
+            "/rest/v1/reviews?select=patient_name,rating,review,created_at&order=created_at.desc",
+            {
+                method: "GET",
+                headers: {
+                    "apikey": SUPABASE_KEY,
+                    "Authorization": "Bearer " + SUPABASE_KEY
+                }
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Reviews could not be loaded");
+        }
+
+        const reviews = await response.json();
+
+        if (reviews.length === 0) {
+
+            reviewsList.innerHTML =
+                '<p class="no-home-reviews">No reviews yet.</p>';
+
+            return;
+        }
+
+        reviewsList.innerHTML = reviews.map(function(item) {
+
+            const rating = Number(item.rating) || 0;
+
+            const stars =
+                "★".repeat(rating) +
+                "☆".repeat(5 - rating);
+
+            return `
+                <div class="home-review-item">
+
+                    <div class="home-review-name">
+                        ${escapeHomepageHtml(item.patient_name)}
+                    </div>
+
+                    <div class="home-review-stars">
+                        ${stars}
+                    </div>
+
+                    <div class="home-review-text">
+                        ${escapeHomepageHtml(item.review)}
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+
+    } catch (error) {
+
+        console.error("Review Error:", error);
+
+        reviewsList.innerHTML =
+            '<p class="no-home-reviews">Reviews load nahi ho pa rahe hain.</p>';
+    }
+}
+
+
+function escapeHomepageHtml(text) {
+
+    const div = document.createElement("div");
+
+    div.textContent = text || "";
+
+    return div.innerHTML;
+}
+
+
+loadHomepageReviews();
+</script>
 
 </body>
 
