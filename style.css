@@ -1786,6 +1786,8 @@ html {
 }
 @media (max-width: 768px) {
 
+}
+
     .doctor-profile-mamta {
         margin: 30px 15px;
         padding: 25px 18px;
@@ -1802,3 +1804,134 @@ html {
     .doctor-profile-mamta .doctor-info h2 {
         font-size: 25px;
     }
+    /* =========================
+   HOMEPAGE PATIENT REVIEWS
+========================= */
+
+.reviews-section {
+    padding: 70px 20px;
+    background: #f4f8fb;
+    text-align: center;
+}
+
+.reviews-section h2 {
+    color: #1976d2;
+    font-size: 38px;
+    margin-bottom: 10px;
+    font-weight: 800;
+}
+
+.reviews-subtitle {
+    color: #666;
+    font-size: 20px;
+    margin-bottom: 35px;
+}
+
+/* Review list */
+
+#reviewsList {
+    width: 100%;
+    max-width: 850px;
+    margin: 30px auto;
+    text-align: left;
+}
+
+/* Individual review */
+
+.home-review-item {
+    background: #ffffff;
+    padding: 28px;
+    margin-bottom: 20px;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9eef3;
+}
+
+.home-review-name {
+    font-size: 21px;
+    font-weight: 800;
+    color: #222;
+    margin-bottom: 8px;
+}
+
+.home-review-stars {
+    color: #f5b400;
+    font-size: 24px;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+}
+
+.home-review-text {
+    color: #555;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+/* No reviews message */
+
+.no-home-reviews {
+    text-align: center;
+    color: #777;
+    font-size: 17px;
+    padding: 20px;
+}
+
+/* Write Review button */
+
+.review-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 14px 28px;
+    background: #1976d2;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.review-btn:hover {
+    background: #125ea8;
+    transform: translateY(-2px);
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .reviews-section {
+        padding: 50px 15px;
+    }
+
+    .reviews-section h2 {
+        font-size: 30px;
+    }
+
+    .reviews-subtitle {
+        font-size: 17px;
+    }
+
+    .home-review-item {
+        padding: 22px 18px;
+        border-radius: 15px;
+    }
+
+    .home-review-name {
+        font-size: 19px;
+    }
+
+    .home-review-stars {
+        font-size: 21px;
+    }
+
+    .home-review-text {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .review-btn {
+        font-size: 16px;
+        padding: 13px 24px;
+    }
+}
